@@ -1,0 +1,64 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<string.h>
+#include<errno.h>
+#include<stdlib.h>
+#include<math.h>
+#include<stdio.h>
+
+void quick_sort(int* a, int low, int high)
+{
+    int i = low;
+    int j = high;
+    int key = a[i];
+    while (i < j)
+    {
+        while (i < j && a[j] >= key)
+        {
+            j--;
+        }
+        a[i] = a[j];
+        while (i < j && a[i] <= key)
+        {
+            i++;
+        }
+        a[j] = a[i];
+    }
+    a[i] = key;
+    if (i - low > 1)
+    {
+        quick_sort(a, low, i-1);
+    }
+    if (high - i > 1)
+    {
+        quick_sort(a, i+1, high);
+    }
+}
+
+int main()
+{
+        int a[101], n, i, j, t,tmp;
+
+        scanf("%d", &n);   //读入n
+        tmp = n;
+        for (i = 1; i <= n; i++) //循环读入n个图书ISBN号
+        {
+            scanf("%d", &a[i]);
+        }
+        quick_sort(a, 1, n);
+        for (i = 2; i <= n; i++)
+        {
+            if (a[i] == a[i - 1])
+            {
+                tmp--;
+            }
+        }
+        printf("%d\n", tmp);
+        printf("%d ", a[1]); //输出第1个数
+        for (i = 2; i <= n; i++) //从2循环到n
+        {
+            if (a[i] != a[i - 1]) //如果当前这个数是第一次出现则输出
+                printf("%d ", a[i]);
+        }
+        getchar(); getchar();
+        return 0;
+    }
